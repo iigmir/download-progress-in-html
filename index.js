@@ -80,7 +80,7 @@ get_help.addEventListener("click", () => {
     {
         return;
     }
-    const ajax = fetch("/help.md").then(r=>r.text());
+    const ajax = fetch("/README.md").then(r=>r.text());
     ajax.then( (content) => {
         help_area.innerHTML = window.markdownit().render( content );
     });
