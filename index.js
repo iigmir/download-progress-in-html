@@ -72,17 +72,30 @@ dl_btn.addEventListener( "click", (event) =>
     open_download(dom.dataset.iappDownloadpath);
 });
 
-const get_help  = document.querySelector("*[data-iapp-action='get-help']");
-const help_area = document.querySelector("*[data-iapp-render='get-help']");
+get_api(
+    "./README.md",
+    document.querySelector("*[data-iapp-action='get-help']"),
+    document.querySelector("*[data-iapp-render='get-help']")
+);
 
-get_help.addEventListener("click", () => {
-    if( help_area.innerHTML.trim().length > 0 )
+get_api(
+    "./LICENCE.md",
+    document.querySelector("*[data-iapp-action='lisence']"),
+    document.querySelector("*[data-iapp-render='lisence']")
+);
+
+function get_api(url, the_button, render_area)
+{
+    the_button.addEventListener("click", () =>
     {
-        return;
-    }
-    const ajax = fetch("./README.md").then(r=>r.text());
-    ajax.then( (content) => {
-        help_area.innerHTML = window.markdownit().render( content );
+        console.log(url);
+        if( render_area.innerHTML.trim().length > 0 )
+        {
+            return;
+        }
+        const ajax = fetch(url).then(r => r.text());
+        const action = (content) => { render_area.innerHTML = window.markdownit().render(content); };
+        ajax.then(action);
     });
-});
+}
 
